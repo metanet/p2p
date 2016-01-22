@@ -46,7 +46,7 @@ Run
   
 You can start a peer by starting a java process with the produced jar file as follows:
   
-`java -DpeerName=Peer1 p2p.jar -n Peer1 -b 50670` 
+`java -jar -DpeerName=Peer1 p2p.jar -n Peer1 -b 50670` 
 
 This command starts a peer with name `Peer1` and binds it to port `50670`. It is the user's responsibility to guarantee uniqueness among names of the peers. 
 
