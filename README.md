@@ -29,6 +29,8 @@ It also implements [Bully Algorithm](https://en.wikipedia.org/wiki/Bully_algorit
 
 All network messages are sent with a fire-and-forget manner without any acknowledgement or retry system.
 
+You can see available configuration options in [Config class](https://github.com/metanet/p2p/blob/master/src/main/java/com/basrikahveci/p2p/peer/Config.java). Main class is also [here](https://github.com/metanet/p2p/blob/master/src/main/java/com/basrikahveci/p2p/Main.java).
+
 
 Build
 ================
