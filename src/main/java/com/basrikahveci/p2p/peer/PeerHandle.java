@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -43,6 +44,10 @@ public class PeerHandle {
     private final ObjectEncoder encoder = new ObjectEncoder();
 
     private final Peer peer;
+
+    private Future keepAliveFuture;
+
+    private Future timeoutPingsFuture;
 
     public PeerHandle(Config config, int portToBind) {
         this.config = config;
@@ -93,9 +98,10 @@ public class PeerHandle {
             }
 
             final int initialDelay = Peer.RANDOM.nextInt(config.getKeepAlivePeriodSeconds());
-            peerEventLoopGroup.scheduleAtFixedRate((Runnable) peer::keepAlivePing, initialDelay, config.getKeepAlivePeriodSeconds(), SECONDS);
 
-            peerEventLoopGroup.scheduleAtFixedRate((Runnable) peer::timeoutPings, 0, 100, TimeUnit.MILLISECONDS);
+            this.keepAliveFuture = peerEventLoopGroup.scheduleAtFixedRate((Runnable) peer::keepAlivePing, initialDelay, config.getKeepAlivePeriodSeconds(), SECONDS);
+
+            this.timeoutPingsFuture = peerEventLoopGroup.scheduleAtFixedRate((Runnable) peer::timeoutPings, 0, 100, TimeUnit.MILLISECONDS);
 
             closeFuture = serverChannel.closeFuture();
         } else {
@@ -115,6 +121,12 @@ public class PeerHandle {
     public CompletableFuture<Void> leave() {
         final CompletableFuture<Void> future = new CompletableFuture<>();
         peerEventLoopGroup.execute(() -> peer.leave(future));
+        if (keepAliveFuture != null && timeoutPingsFuture != null) {
+            keepAliveFuture.cancel(false);
+            timeoutPingsFuture.cancel(false);
+            keepAliveFuture = null;
+            timeoutPingsFuture = null;
+        }
         return future;
     }
 

@@ -180,7 +180,10 @@ public class Main {
     }
 
     private static void printHelp(final String line) {
-        System.out.println("Invalid input command:  " + line);
+        if (!"help".equalsIgnoreCase(line.trim())) {
+            System.out.println("Invalid input command:  " + line);
+        }
+
         System.out.println(
                 "############################################## COMMANDS ###############################################");
         System.out.println(
