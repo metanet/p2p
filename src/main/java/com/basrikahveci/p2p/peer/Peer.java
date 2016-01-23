@@ -251,6 +251,7 @@ public class Peer {
             }
         });
 
+        pingService.cancelOwnPing();
         pingService.cancelPongs(config.getPeerName());
         final CancelPongs cancelPongs = new CancelPongs(config.getPeerName());
         for (Connection connection : connectionService.getConnections()) {

@@ -261,6 +261,19 @@ public class PingService {
     }
 
     /**
+     * Cancels this peers ping operation and notifies its futures
+     */
+    public void cancelOwnPing() {
+        final PingContext pingContext = currentPings.get(config.getPeerName());
+        if (pingContext != null) {
+            LOGGER.info("Cancelling own ping");
+            for (CompletableFuture<Collection<String>> future : pingContext.getFutures()) {
+                future.cancel(true);
+            }
+        }
+    }
+
+    /**
      * Terminates ongoing Ping operations that completed the timeout duration. If there is a terminated Ping operation
      * initiated by this peer, {@link Pong} messages collected are returned.
      *
