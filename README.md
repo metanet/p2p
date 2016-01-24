@@ -10,15 +10,15 @@ It has following capabilities:
 - List peers in the network
 - Leader election
 
-P2P network is unstructured. Once a peer is started, it can join to the network by connecting to any of the peers in the network. 
+P2P network is unstructured. Once a peer is started, it can join by connecting to any of the peers in the network. 
  
 To maintain connectivity of the P2P network, each peer connects to more than one peer in the network randomly. 
 
-Peers send periodic keep alive messages to their neighbours to notify them about their presence. If a peer does not receive a message from a neighbour, it drops the connection.
+Peers send periodic keep alive messages to their neighbours to notify them about their presence. If a peer does not receive a message from a neighbour for a configured amount of time, it drops the connection.
  
-A peer can discover other peers in the network by initiating a Ping-Pong process by sending a Ping message to its neighbours and waiting for the Pong messages for some time. This message also contains how many hops it can go over the network. When a peer receives a Ping message from a neighbour, it replies with a Pong message and dispatches the Ping message to its own neighbours after decreasing the hop count.
+A peer can discover other peers in the network with a Ping-Pong process by sending a Ping message to its neighbours and waiting for the Pong messages for some time. This message also contains how many hops it can go over the network. When a peer receives a Ping message from a neighbour, it replies with a Pong message and dispatches the Ping message to its own neighbours after decreasing the hop count.
   
-This mechanism is a very basic implementation of the Ping-Pong mechanism described in the Gnutella P2P network v0.4. To read more about Gnutella, please see [The Annotated Gnutella Protocol Specification v0.4](http://rfc-gnutella.sourceforge.net/developer/stable/)  and [Gnutella Wikipedia](https://en.wikipedia.org/wiki/Gnutella). 
+This mechanism is a very basic implementation of the Ping-Pong mechanism described in the Gnutella P2P network protocol v0.4. To read more about Gnutella, please see [The Annotated Gnutella Protocol Specification v0.4](http://rfc-gnutella.sourceforge.net/developer/stable/)  and [Gnutella Wikipedia](https://en.wikipedia.org/wiki/Gnutella). 
  
 In the image below, you can see a Ping-Pong flow. 
  
