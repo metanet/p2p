@@ -7,7 +7,11 @@ import joptsimple.OptionSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Properties;
 
 public class Main {
@@ -191,7 +195,7 @@ public class Main {
         System.out.println(
                 "# 2) leave               >>> Leaves the network                                                       #");
         System.out.println(
-                "# 3) connect host:port   >>> Connects to the peer specified by host:port pair                         #");
+                "# 3) connect host port   >>> Connects to the peer specified by host:port pair                         #");
         System.out.println(
                 "# 4) disconnect peerName >>> Disconnects from the peer specified with peerName                        #");
         System.out.println(
